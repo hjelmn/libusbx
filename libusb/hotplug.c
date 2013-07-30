@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode:t ; c-basic-offset:8 -*- */
 /*
- * Hotplug functions for libusbx
+ * Hotplug functions for libusb
  * Copyright © 2012-2013 Nathan Hjelm <hjelmn@mac.com>
  * Copyright © 2012-2013 Peter Stuge <peter@stuge.se>
  *
@@ -76,7 +76,7 @@
  * are invalid and will remain so even if the device comes back.
  *
  * When handling a LIBUSB_HOTPLUG_EVENT_DEVICE_ARRIVED event it is considered
- * safe to call any libusbx function that takes a libusb_device. On the other hand,
+ * safe to call any libusb function that takes a libusb_device. On the other hand,
  * when handling a LIBUSB_HOTPLUG_EVENT_DEVICE_LEFT event the only safe function
  * is libusb_get_device_descriptor().
  *

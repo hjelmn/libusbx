@@ -1,10 +1,10 @@
 /*
- * Public libusbx header file
+ * Public libusb header file
  * Copyright © 2001 Johannes Erdfelt <johannes@erdfelt.com>
  * Copyright © 2007-2008 Daniel Drake <dsd@gentoo.org>
  * Copyright © 2012 Pete Batard <pete@akeo.ie>
  * Copyright © 2012 Nathan Hjelm <hjelmn@cs.unm.edu>
- * For more information, please visit: http://libusbx.org
+ * For more information, please visit: http://libusb.org
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -62,7 +62,7 @@ typedef unsigned __int32  uint32_t;
 #include <limits.h>
 
 /* 'interface' might be defined as a macro on Windows, so we need to
- * undefine it so as not to break the current libusbx API, because
+ * undefine it so as not to break the current libusb API, because
  * libusb_config_descriptor has an 'interface' member
  * As this can be problematic if you include windows.h after libusb.h
  * in your sources, we force windows.h to be included first. */
@@ -85,14 +85,14 @@ typedef unsigned __int32  uint32_t;
 
 /** \def LIBUSB_CALL
  * \ingroup misc
- * libusbx's Windows calling convention.
+ * libusb's Windows calling convention.
  *
  * Under Windows, the selection of available compilers and configurations
  * means that, unlike other platforms, there is not <em>one true calling
  * convention</em> (calling convention: the manner in which parameters are
  * passed to funcions in the generated assembly code).
  *
- * Matching the Windows API itself, libusbx uses the WINAPI convention (which
+ * Matching the Windows API itself, libusb uses the WINAPI convention (which
  * translates to the <tt>stdcall</tt> convention) and guarantees that the
  * library is compiled in this way. The public header file also includes
  * appropriate annotations so that your own software will use the right
@@ -100,7 +100,7 @@ typedef unsigned __int32  uint32_t;
  * your codebase.
  *
  * The one consideration that you must apply in your software is to mark
- * all functions which you use as libusbx callbacks with this LIBUSB_CALL
+ * all functions which you use as libusb callbacks with this LIBUSB_CALL
  * annotation, so that they too get compiled for the correct calling
  * convention.
  *
@@ -108,7 +108,7 @@ typedef unsigned __int32  uint32_t;
  * means that you can apply it to your code without worrying about
  * cross-platform compatibility.
  */
-/* LIBUSB_CALL must be defined on both definition and declaration of libusbx
+/* LIBUSB_CALL must be defined on both definition and declaration of libusb
  * functions. You'd think that declaration would be enough, but cygwin will
  * complain about conflicting types unless both are marked this way.
  * The placement of this macro is important too; it must appear after the
@@ -123,26 +123,26 @@ typedef unsigned __int32  uint32_t;
 
 /** \def LIBUSBX_API_VERSION
  * \ingroup misc
- * libusbx's API version.
+ * libusb's API version.
  *
- * Since version 1.0.13, to help with feature detection, libusbx defines
+ * Since version 1.0.13, to help with feature detection, libusb defines
  * a LIBUSBX_API_VERSION macro that gets increased every time there is a
  * significant change to the API, such as the introduction of a new call,
  * the definition of a new macro/enum member, or any other element that
- * libusbx applications may want to detect at compilation time.
+ * libusb applications may want to detect at compilation time.
  *
  * The macro is typically used in an application as follows:
  * \code
  * #if defined(LIBUSBX_API_VERSION) && (LIBUSBX_API_VERSION >= 0x01001234)
- * // Use one of the newer features from the libusbx API
+ * // Use one of the newer features from the libusb API
  * #endif
  * \endcode
  *
  * Another feature of LIBUSBX_API_VERSION is that it can be used to detect
- * whether you are compiling against the libusb or the libusbx library.
+ * whether you are compiling against the libusb or the libusb library.
  *
  * Internally, LIBUSBX_API_VERSION is defined as follows:
- * (libusbx major << 24) | (libusbx minor << 16) | (16 bit incremental)
+ * (libusb major << 24) | (libusb minor << 16) | (16 bit incremental)
  */
 #define LIBUSBX_API_VERSION 0x01000102
 
@@ -562,7 +562,7 @@ struct libusb_endpoint_descriptor {
 	/** For audio devices only: the address if the synch endpoint */
 	uint8_t  bSynchAddress;
 
-	/** Extra descriptors. If libusbx encounters unknown endpoint descriptors,
+	/** Extra descriptors. If libusb encounters unknown endpoint descriptors,
 	 * it will store them here, should you wish to parse them. */
 	const unsigned char *extra;
 
@@ -612,7 +612,7 @@ struct libusb_interface_descriptor {
 	 * by the bNumEndpoints field. */
 	const struct libusb_endpoint_descriptor *endpoint;
 
-	/** Extra descriptors. If libusbx encounters unknown interface descriptors,
+	/** Extra descriptors. If libusb encounters unknown interface descriptors,
 	 * it will store them here, should you wish to parse them. */
 	const unsigned char *extra;
 
@@ -670,7 +670,7 @@ struct libusb_config_descriptor {
 	 * this array is determined by the bNumInterfaces field. */
 	const struct libusb_interface *interface;
 
-	/** Extra descriptors. If libusbx encounters unknown configuration
+	/** Extra descriptors. If libusb encounters unknown configuration
 	 * descriptors, it will store them here, should you wish to parse them. */
 	const unsigned char *extra;
 
@@ -889,7 +889,7 @@ struct libusb_control_setup {
 
 #define LIBUSB_CONTROL_SETUP_SIZE (sizeof(struct libusb_control_setup))
 
-/* libusbx */
+/* libusb */
 
 struct libusb_context;
 struct libusb_device;
@@ -897,7 +897,7 @@ struct libusb_device_handle;
 struct libusb_hotplug_callback;
 
 /** \ingroup lib
- * Structure providing the version of the libusbx runtime
+ * Structure providing the version of the libusb runtime
  */
 struct libusb_version {
 	/** Library major version. */
@@ -920,16 +920,16 @@ struct libusb_version {
 };
 
 /** \ingroup lib
- * Structure representing a libusbx session. The concept of individual libusbx
+ * Structure representing a libusb session. The concept of individual libusb
  * sessions allows for your program to use two libraries (or dynamically
  * load two modules) which both independently use libusb. This will prevent
- * interference between the individual libusbx users - for example
+ * interference between the individual libusb users - for example
  * libusb_set_debug() will not affect the other user of the library, and
  * libusb_exit() will not destroy resources that the other user is still
  * using.
  *
  * Sessions are created by libusb_init() and destroyed through libusb_exit().
- * If your application is guaranteed to only ever include a single libusbx
+ * If your application is guaranteed to only ever include a single libusb
  * user (i.e. you), you do not have to worry about contexts: pass NULL in
  * every function call where a context is required. The default context
  * will be used.
@@ -1042,7 +1042,7 @@ enum libusb_bos_type {
 };
 
 /** \ingroup misc
- * Error codes. Most libusbx functions return 0 on success or one of these
+ * Error codes. Most libusb functions return 0 on success or one of these
  * codes on failure.
  * You can call libusb_error_name() to retrieve a string representation of an
  * error code or libusb_strerror() to get an end-user suitable description of
@@ -1188,7 +1188,7 @@ struct libusb_transfer;
  * Asynchronous transfer callback function type. When submitting asynchronous
  * transfers, you pass a pointer to a callback function of this type via the
  * \ref libusb_transfer::callback "callback" member of the libusb_transfer
- * structure. libusbx will call this function later, when the transfer has
+ * structure. libusb will call this function later, when the transfer has
  * completed or failed. See \ref asyncio for more information.
  * \param transfer The libusb_transfer struct the callback function is being
  * notified about.
@@ -1271,7 +1271,7 @@ enum libusb_capability {
 	LIBUSB_CAP_HAS_HOTPLUG = 0x0001,
 	/** The library can access HID devices without requiring user intervention.
 	 * Note that before being able to actually access an HID device, you may
-	 * still have to call additional libusbx functions such as
+	 * still have to call additional libusb functions such as
 	 * \ref libusb_detach_kernel_driver(). */
 	LIBUSB_CAP_HAS_HID_ACCESS = 0x0100,
 	/** The library supports detaching of the default USB driver, using 
@@ -1869,7 +1869,7 @@ typedef enum {
  * This callback may be called by an internal event thread and as such it is
  * recommended the callback do minimal processing before returning.
  *
- * libusbx will call this function later, when a matching event had happened on
+ * libusb will call this function later, when a matching event had happened on
  * a matching device. See \ref hotplug for more information.
  *
  * It is safe to call either libusb_hotplug_register_callback() or
