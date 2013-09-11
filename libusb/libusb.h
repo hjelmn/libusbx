@@ -144,7 +144,7 @@ typedef unsigned __int32  uint32_t;
  * Internally, LIBUSBX_API_VERSION is defined as follows:
  * (libusbx major << 24) | (libusbx minor << 16) | (16 bit incremental)
  */
-#define LIBUSBX_API_VERSION 0x01000102
+#define LIBUSBX_API_VERSION 0x01000103
 
 #ifdef __cplusplus
 extern "C" {
@@ -1475,6 +1475,10 @@ struct libusb_transfer * LIBUSB_CALL libusb_alloc_transfer(int iso_packets);
 int LIBUSB_CALL libusb_submit_transfer(struct libusb_transfer *transfer);
 int LIBUSB_CALL libusb_cancel_transfer(struct libusb_transfer *transfer);
 void LIBUSB_CALL libusb_free_transfer(struct libusb_transfer *transfer);
+void LIBUSB_CALL libusb_transfer_set_stream_id(
+	struct libusb_transfer *transfer, int stream_id);
+int LIBUSB_CALL libusb_transfer_get_stream_id(
+	struct libusb_transfer *transfer);
 
 /** \ingroup asyncio
  * Helper function to populate the required \ref libusb_transfer fields
@@ -1548,6 +1552,33 @@ static inline void libusb_fill_bulk_transfer(struct libusb_transfer *transfer,
 	transfer->length = length;
 	transfer->user_data = user_data;
 	transfer->callback = callback;
+}
+
+/** \ingroup asyncio
+ * Helper function to populate the required \ref libusb_transfer fields
+ * for a bulk transfer using bulk streams.
+ *
+ * Since version 1.0.18, \ref LIBUSBX_API_VERSION >= 0x01000103
+ *
+ * \param transfer the transfer to populate
+ * \param dev_handle handle of the device that will handle the transfer
+ * \param endpoint address of the endpoint where this transfer will be sent
+ * \param stream_id bulk stream id for this transfer
+ * \param buffer data buffer
+ * \param length length of data buffer
+ * \param callback callback function to be invoked on transfer completion
+ * \param user_data user data to pass to callback function
+ * \param timeout timeout for the transfer in milliseconds
+ */
+static inline void libusb_fill_bulk_stream_transfer(
+	struct libusb_transfer *transfer, libusb_device_handle *dev_handle,
+	unsigned char endpoint, int stream_id,
+	unsigned char *buffer, int length, libusb_transfer_cb_fn callback,
+	void *user_data, unsigned int timeout)
+{
+	libusb_fill_bulk_transfer(transfer, dev_handle, endpoint, buffer,
+				  length, callback, user_data, timeout);
+	libusb_transfer_set_stream_id(transfer, stream_id);
 }
 
 /** \ingroup asyncio

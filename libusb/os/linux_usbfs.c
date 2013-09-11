@@ -1824,6 +1824,7 @@ static int submit_bulk_transfer(struct usbi_transfer *itransfer,
 		urb->usercontext = itransfer;
 		urb->type = urb_type;
 		urb->endpoint = transfer->endpoint;
+		urb->stream_id = itransfer->stream_id;
 		urb->buffer = transfer->buffer + (i * bulk_buffer_len);
 		/* don't set the short not ok flag for the last URB */
 		if (use_bulk_continuation && !is_out && (i < num_urbs - 1))
