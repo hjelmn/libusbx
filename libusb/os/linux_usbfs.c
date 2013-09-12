@@ -2106,6 +2106,7 @@ static int op_submit_transfer(struct usbi_transfer *itransfer)
 	case LIBUSB_TRANSFER_TYPE_CONTROL:
 		return submit_control_transfer(itransfer);
 	case LIBUSB_TRANSFER_TYPE_BULK:
+	case LIBUSB_TRANSFER_TYPE_BULK_STREAM:
 		return submit_bulk_transfer(itransfer, USBFS_URB_TYPE_BULK);
 	case LIBUSB_TRANSFER_TYPE_INTERRUPT:
 		return submit_bulk_transfer(itransfer, USBFS_URB_TYPE_INTERRUPT);

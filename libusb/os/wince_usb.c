@@ -689,6 +689,8 @@ static int wince_submit_transfer(
 		return wince_submit_control_or_bulk_transfer(itransfer);
 	case LIBUSB_TRANSFER_TYPE_ISOCHRONOUS:
 		return wince_submit_iso_transfer(itransfer);
+	case LIBUSB_TRANSFER_TYPE_BULK_STREAM:
+		return LIBUSB_ERROR_NOT_SUPPORTED;
 	default:
 		usbi_err(TRANSFER_CTX(transfer), "unknown endpoint type %d", transfer->type);
 		return LIBUSB_ERROR_INVALID_PARAM;

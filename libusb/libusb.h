@@ -340,7 +340,10 @@ enum libusb_transfer_type {
 	LIBUSB_TRANSFER_TYPE_BULK = 2,
 
 	/** Interrupt endpoint */
-	LIBUSB_TRANSFER_TYPE_INTERRUPT = 3
+	LIBUSB_TRANSFER_TYPE_INTERRUPT = 3,
+
+	/** Stream endpoint */
+	LIBUSB_TRANSFER_TYPE_BULK_STREAM = 4,
 };
 
 /** \ingroup misc
@@ -1578,6 +1581,7 @@ static inline void libusb_fill_bulk_stream_transfer(
 {
 	libusb_fill_bulk_transfer(transfer, dev_handle, endpoint, buffer,
 				  length, callback, user_data, timeout);
+	transfer->type = LIBUSB_TRANSFER_TYPE_BULK_STREAM;
 	libusb_transfer_set_stream_id(transfer, stream_id);
 }
 

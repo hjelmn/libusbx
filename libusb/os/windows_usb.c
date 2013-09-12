@@ -2005,6 +2005,8 @@ static int windows_submit_transfer(struct usbi_transfer *itransfer)
 		return submit_bulk_transfer(itransfer);
 	case LIBUSB_TRANSFER_TYPE_ISOCHRONOUS:
 		return submit_iso_transfer(itransfer);
+	case LIBUSB_TRANSFER_TYPE_BULK_STREAM:
+		return LIBUSB_ERROR_NOT_SUPPORTED;
 	default:
 		usbi_err(TRANSFER_CTX(transfer), "unknown endpoint type %d", transfer->type);
 		return LIBUSB_ERROR_INVALID_PARAM;
