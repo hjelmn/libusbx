@@ -1637,9 +1637,9 @@ int API_EXPORTED libusb_reset_device(libusb_device_handle *dev)
  * \returns number of streams allocated, or a LIBUSB_ERROR code on failure
  */
 int API_EXPORTED libusb_alloc_streams(libusb_device_handle *dev,
-	int num_streams, unsigned char *endpoints, int num_endpoints)
+	uint32_t num_streams, unsigned char *endpoints, int num_endpoints)
 {
-	usbi_dbg("streams %d eps %d", num_streams, num_endpoints);
+	usbi_dbg("streams %u eps %d", (unsigned) num_streams, num_endpoints);
 
 	if (!dev->dev->attached)
 		return LIBUSB_ERROR_NO_DEVICE;

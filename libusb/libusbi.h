@@ -357,7 +357,7 @@ struct usbi_transfer {
 	struct list_head list;
 	struct timeval timeout;
 	int transferred;
-	int stream_id;
+	uint32_t stream_id;
 	uint8_t flags;
 
 	/* this lock is held during libusb_submit_transfer() and
@@ -837,7 +837,7 @@ struct usbi_os_backend {
 
 	/* Alloc num_streams usb3 bulk streams on the passed in endpoints */
 	int (*alloc_streams)(struct libusb_device_handle *handle,
-		int num_streams, unsigned char *endpoints, int num_endpoints);
+		uint32_t num_streams, unsigned char *endpoints, int num_endpoints);
 
 	/* Free usb3 bulk streams allocated with alloc_streams */
 	int (*free_streams)(struct libusb_device_handle *handle,

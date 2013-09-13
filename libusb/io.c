@@ -1522,7 +1522,7 @@ int API_EXPORTED libusb_cancel_transfer(struct libusb_transfer *transfer)
  * \see libusb_alloc_streams()
  */
 void API_EXPORTED libusb_transfer_set_stream_id(
-	struct libusb_transfer *transfer, int stream_id)
+	struct libusb_transfer *transfer, uint32_t stream_id)
 {
 	struct usbi_transfer *itransfer =
 		LIBUSB_TRANSFER_TO_USBI_TRANSFER(transfer);
@@ -1538,7 +1538,7 @@ void API_EXPORTED libusb_transfer_set_stream_id(
  * \param transfer the transfer to get the stream id for
  * \returns the stream id for the transfer
  */
-int API_EXPORTED libusb_transfer_get_stream_id(
+uint32_t API_EXPORTED libusb_transfer_get_stream_id(
 	struct libusb_transfer *transfer)
 {
 	struct usbi_transfer *itransfer =

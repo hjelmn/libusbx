@@ -1388,7 +1388,7 @@ int LIBUSB_CALL libusb_clear_halt(libusb_device_handle *dev,
 int LIBUSB_CALL libusb_reset_device(libusb_device_handle *dev);
 
 int LIBUSB_CALL libusb_alloc_streams(libusb_device_handle *dev,
-	int num_streams, unsigned char *endpoints, int num_endpoints);
+	uint32_t num_streams, unsigned char *endpoints, int num_endpoints);
 int LIBUSB_CALL libusb_free_streams(libusb_device_handle *dev,
 	unsigned char *endpoints, int num_endpoints);
 
@@ -1479,8 +1479,8 @@ int LIBUSB_CALL libusb_submit_transfer(struct libusb_transfer *transfer);
 int LIBUSB_CALL libusb_cancel_transfer(struct libusb_transfer *transfer);
 void LIBUSB_CALL libusb_free_transfer(struct libusb_transfer *transfer);
 void LIBUSB_CALL libusb_transfer_set_stream_id(
-	struct libusb_transfer *transfer, int stream_id);
-int LIBUSB_CALL libusb_transfer_get_stream_id(
+	struct libusb_transfer *transfer, uint32_t stream_id);
+uint32_t LIBUSB_CALL libusb_transfer_get_stream_id(
 	struct libusb_transfer *transfer);
 
 /** \ingroup asyncio
@@ -1575,7 +1575,7 @@ static inline void libusb_fill_bulk_transfer(struct libusb_transfer *transfer,
  */
 static inline void libusb_fill_bulk_stream_transfer(
 	struct libusb_transfer *transfer, libusb_device_handle *dev_handle,
-	unsigned char endpoint, int stream_id,
+	unsigned char endpoint, uint32_t stream_id,
 	unsigned char *buffer, int length, libusb_transfer_cb_fn callback,
 	void *user_data, unsigned int timeout)
 {

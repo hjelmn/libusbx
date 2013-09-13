@@ -1890,7 +1890,7 @@ static int darwin_clock_gettime(int clk_id, struct timespec *tp) {
 }
 
 #if InterfaceVersion >= 550
-static int darwin_alloc_streams (struct libusb_device_handle *dev_handle, int num_streams, unsigned char *endpoints,
+static int darwin_alloc_streams (struct libusb_device_handle *dev_handle, uint32_t num_streams, unsigned char *endpoints,
                                  int num_endpoints) {
   struct darwin_interface *cInterface;
   UInt32 supportsStreams;

@@ -1483,7 +1483,7 @@ out:
 }
 
 static int do_streams_ioctl(struct libusb_device_handle *handle, int req,
-	int num_streams, unsigned char *endpoints, int num_endpoints)
+	uint32_t num_streams, unsigned char *endpoints, int num_endpoints)
 {
 	int r, fd = _device_handle_priv(handle)->fd;
 	struct usbfs_streams streams = {
@@ -1513,7 +1513,7 @@ static int do_streams_ioctl(struct libusb_device_handle *handle, int req,
 }
 
 static int op_alloc_streams(struct libusb_device_handle *handle,
-	int num_streams, unsigned char *endpoints, int num_endpoints)
+	uint32_t num_streams, unsigned char *endpoints, int num_endpoints)
 {
 	return do_streams_ioctl(handle, IOCTL_USBFS_ALLOC_STREAMS,
 				num_streams, endpoints, num_endpoints);
